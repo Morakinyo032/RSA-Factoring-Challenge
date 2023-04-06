@@ -1,0 +1,35 @@
+#!/usr/bin/python3
+from sys import argv
+def is_prime(num):
+    if type(num) is not int:
+        return (False)
+    if num <= 1:
+        return (False)
+    for i in range(2, int(num / 2) + 1):
+        if num % i == 0:
+            return (False)
+    return (True)
+def factorize(line):
+    l = []
+    num = int(line)
+    if is_prime(num) is True:
+        return ([1, num])
+    prime1 = 2
+    prime2 = num / prime1
+    while is_prime(prime2) is False:
+        prime1 += 1
+        if is_prime(prime1) is True:
+            prime2 = num / prime1
+    l.append(prime1)
+    l.append(prime2)
+    return (l)
+def main():
+    if len(argv) != 2:
+        print(f"Usage: {argv[0]} <file>")
+        return
+    f = open(argv[1], 'r')
+    for line in f:
+        primes = factorize(line)
+        print("{}={:d}*{:d}\n".format(line, primes[0], primes[1]))
+    return
+main()
